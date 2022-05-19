@@ -8,6 +8,9 @@ const router = express.Router();
 router.get(
   '/',
   query('url').isURL().withMessage('url is not valid'),
+  query('apikey')
+    .custom((val) => val === process.env.API_KEY)
+    .withMessage('apikey is not valid'),
   async (req: Request, res: Response) => {
     const { url } = req.query;
 
