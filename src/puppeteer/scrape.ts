@@ -89,7 +89,7 @@ const _extractTaiwangun = async (page: Page) => {
   return {
     price: Number(
       price
-        .filter((i) => i.startsWith('€') || i.startsWith('$'))[0]
+        .filter((i) => i && (i.startsWith('€') || i.startsWith('$')))[0]
         .replace('€', '')
     ),
     name: name[0],
