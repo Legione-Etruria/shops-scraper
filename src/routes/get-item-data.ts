@@ -17,6 +17,8 @@ router.get(
     if (!url) {
       throw new Error('url is not valid');
     }
+
+    console.info(`Scraping ${url}`);
     const result = await getDataFrom(String(url));
 
     res.send(result);

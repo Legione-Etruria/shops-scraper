@@ -71,16 +71,22 @@ const _extractTaiwangun = async (page: Page) => {
     valueType: 'innerText',
   }).catch(genericErrorHandler);
 
+  console.info(`Price: ${price}`);
+
   const name = await getRenderedElements({
     DOM: page,
     prop: 'div.product-header',
     valueType: 'innerText',
   }).catch(genericErrorHandler);
+
+  console.info(`Name: ${name}`);
   const imgSrc = await getRenderedElements({
     DOM: page,
     prop: 'img.b-loaded',
     valueType: 'src',
   }).catch(genericErrorHandler);
+
+  console.info(`ImgSrc: ${imgSrc}`);
 
   if (!price || !name || !imgSrc) {
     throw new Error('Error while extracting data');
