@@ -16,6 +16,10 @@ export const getDataFrom = async (url: string) => {
   }
 
   const page = await browser.newPage();
+  await page.browserContext().overridePermissions(url, ['geolocation']);
+  await page
+    .setGeolocation({ latitude: 43.879608, longitude: 11.09625 })
+    .catch(genericErrorHandler);
   await page.goto(url).catch(genericErrorHandler);
   await page.waitForNetworkIdle();
 

@@ -10,6 +10,7 @@ export const launchBrowser = async () => {
   });
 
   await browser.newPage();
+
   console.log('🚀 Puppeteer Setup Completed 👌');
 };
 
