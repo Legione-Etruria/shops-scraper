@@ -1,3 +1,5 @@
+import { Page } from 'puppeteer';
+
 /**
  * Ottieni un array di elementi mostrati a schermo con la stessa classe CSS
  */
@@ -24,6 +26,22 @@ export const getRenderedElements = async (
     )
   );
   return await elemsArray;
+};
+
+export const setItalianLocale = async (page: Page) => {
+  await page.goto(
+    'https://www.taiwangun.com/morale-patches/taiwangun-pvc-patch-1-8fields-2?q=taiwangun'
+  );
+  await page.waitForNetworkIdle();
+
+  await page.select(`#UserCartDataCountryId`, '23');
+  await page.type('#UserCartDataPostCode', '59100');
+
+  await page.click("input[class='btn-next btn btn-primary btn-lg']");
+
+  await page.waitForSelector("div[class='message info']");
+
+  console.warn('🇮🇹 Italian locale set 👌');
 };
 
 export interface IParams {

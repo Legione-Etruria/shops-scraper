@@ -1,4 +1,5 @@
 import puppeteer, { Browser } from 'puppeteer';
+import { setItalianLocale } from './utils/utils';
 
 export let browser: Browser;
 
@@ -9,7 +10,9 @@ export const launchBrowser = async () => {
     executablePath: process.env.DEBUG_CHROMIUM_PATH,
   });
 
-  await browser.newPage();
+  const page = await browser.newPage();
+
+  await setItalianLocale(page);
 
   console.log('🚀 Puppeteer Setup Completed 👌');
 };
