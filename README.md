@@ -10,7 +10,7 @@ Sotto il cofano usa puppeteer per accedere al web
 
  - `/scrape` 
   	 ```typescript 
-     "URL": string; //l'url da cui ottenere le informazioni
+     "url": string; //l'url da cui ottenere le informazioni
      "checkAvailability?": boolean; //skip dell'ottenimento di tutto ciò che non è lo stato di disponibilità dell'oggetto
      "apikey": any //api key necessaria per una sorta di autenticazione 
 
