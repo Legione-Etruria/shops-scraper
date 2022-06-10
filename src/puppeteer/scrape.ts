@@ -2,10 +2,21 @@ import { Page } from 'puppeteer';
 import { browser } from './puppeteer';
 import { getRenderedElements } from './utils/utils';
 
-export const getDataFrom = async (url: string) => {
+interface Ioptions {
+  checkAvailability: boolean;
+}
+
+interface Iscraped {
+  price?: number;
+  isUnavailable?: boolean;
+  name?: string;
+  imgSrc?: string;
+}
+
+export const getDataFrom = async (url: string, options: Ioptions) => {
   const urlSplit = url.split('www.');
   const domain = urlSplit[1];
-  let scrapedData: { price: number; name: string | undefined } = {} as any;
+  let scrapedData: Iscraped = {} as any;
 
   const ilSemaforo = domain.startsWith('ilsemaforo');
   const taiwangun = domain.startsWith('taiwangun');
@@ -24,19 +35,37 @@ export const getDataFrom = async (url: string) => {
   await page.waitForNetworkIdle();
 
   if (ilSemaforo) {
-    scrapedData = await _extractIlSemaforo(page);
+    scrapedData = await _extractIlSemaforo(page, options);
   }
 
   if (taiwangun) {
-    scrapedData = await _extractTaiwangun(page);
+    scrapedData = await _extractTaiwangun(page, options);
   }
 
   await page.close();
   return scrapedData;
 };
 
-const _extractIlSemaforo = async (page: Page) => {
+const _extractIlSemaforo = async (
+  page: Page,
+  options: Ioptions
+): Promise<Iscraped> => {
   await page.waitForSelector('#s99_price').catch(genericErrorHandler);
+
+  const availabilityLabel = await getRenderedElements({
+    DOM: page,
+    prop: '#s99_availability',
+    valueType: 'innerText',
+  }).catch(genericErrorHandler);
+
+  if (options.checkAvailability) {
+    if (!availabilityLabel) {
+      throw new Error('Error while extracting data');
+    }
+    return {
+      isUnavailable: availabilityLabel[0].toLowerCase() !== 'disponibile',
+    };
+  }
 
   const price: string[] | null = await getRenderedElements({
     DOM: page,
@@ -55,19 +84,31 @@ const _extractIlSemaforo = async (page: Page) => {
     valueType: 'src',
   }).catch(genericErrorHandler);
 
-  if (!price || !name || !imgSrc) {
+  if (!price || !name || !imgSrc || !availabilityLabel) {
     throw new Error('Error while extracting data');
   }
 
   return {
     price: Number(price[0].replace('€', '').replace(',', '.')),
+    isUnavailable: availabilityLabel[0].toLowerCase() !== 'disponibile',
     name: name[0],
     imgSrc: imgSrc[0],
   };
 };
 
-const _extractTaiwangun = async (page: Page) => {
-  await page.waitForSelector('span[class="price"]').catch(genericErrorHandler);
+const _extractTaiwangun = async (
+  page: Page,
+  options: Ioptions
+): Promise<Iscraped> => {
+  // await page.waitForSelector('span[class="price"]').catch(genericErrorHandler);
+
+  const unavailable = await page.$('div.product-unavailable-label');
+
+  if (options.checkAvailability) {
+    return {
+      isUnavailable: unavailable !== null,
+    };
+  }
 
   const price = await getRenderedElements({
     DOM: page,
@@ -92,14 +133,15 @@ const _extractTaiwangun = async (page: Page) => {
 
   console.info(`ImgSrc: ${imgSrc}`);
 
-  if (!price || !name || !imgSrc) {
+  if (!name || !imgSrc) {
     throw new Error('Error while extracting data');
   }
 
   return {
-    price: Number(price[0].replace('€', '')),
+    price: price ? Number(price[0].replace('€', '')) : 0,
     name: name[0],
     imgSrc: imgSrc[0],
+    isUnavailable: unavailable !== null,
   };
 };
 
