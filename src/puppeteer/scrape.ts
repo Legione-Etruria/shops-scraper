@@ -138,7 +138,7 @@ const _extractTaiwangun = async (
   }
 
   return {
-    price: price ? Number(price[0].replace('€', '')) : 0,
+    price: price?.length ? Number(price[0].replace('€', '')) : 0,
     name: name[0],
     imgSrc: imgSrc[0],
     isUnavailable: unavailable !== null,
