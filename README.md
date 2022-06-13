@@ -1,6 +1,6 @@
 # Scraper Taiwangun e ilSemaforo
 
-Scraper creato per ottenere i dati degli oggetti (nome, prezzo, immagine, disponibilità) dai suddetti negozi in modo da permettere l'automatismo dell'aggiunta di un prodotto nel gestore ordini Legione Etruria
+Scraper creato per ottenere dati dei prodotti (nome, prezzo, immagine, disponibilità) dai suddetti negozi in modo da permettere l'automatismo dell'aggiunta e il tracking di un prodotto nel gestore ordini Legione Etruria
 
 Sotto il cofano usa puppeteer per accedere al web
 
