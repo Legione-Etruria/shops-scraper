@@ -2,7 +2,7 @@
 
 Scraper creato per ottenere dati dei prodotti (nome, prezzo, immagine, disponibilità) dai suddetti negozi in modo da permettere l'automatismo dell'aggiunta e il tracking di un prodotto nel gestore ordini Legione Etruria
 
-Sotto il cofano usa puppeteer per accedere al web
+Puppeteer è usato per ottenere le informazioni dai siti web
 
 
 # Routes
