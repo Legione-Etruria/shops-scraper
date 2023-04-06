@@ -100,8 +100,6 @@ const _extractTaiwangun = async (
   page: Page,
   options: Ioptions
 ): Promise<Iscraped> => {
-  // await page.waitForSelector('span[class="price"]').catch(genericErrorHandler);
-
   const unavailable = await page.$('div.product-unavailable-label');
 
   if (options.checkAvailability) {
@@ -112,7 +110,7 @@ const _extractTaiwangun = async (
 
   const price = await getRenderedElements({
     DOM: page,
-    prop: 'span[class="price"]',
+    prop: 'span.price',
     valueType: 'innerText',
   }).catch(genericErrorHandler);
 
