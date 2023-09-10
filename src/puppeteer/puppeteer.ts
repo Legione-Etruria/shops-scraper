@@ -5,7 +5,7 @@ export let browser: Browser;
 
 export const launchBrowser = async () => {
   browser = await puppeteer.launch({
-    headless: 'chrome',
+    headless: 'new',
     args: browserArgs,
   });
 
@@ -16,7 +16,7 @@ export const launchBrowser = async () => {
   console.log('🚀 Puppeteer Setup Completed 👌');
 };
 
-export const browserArgs = [
+const browserArgs = [
   '--autoplay-policy=user-gesture-required',
   '--disable-background-networking',
   '--disable-background-timer-throttling',

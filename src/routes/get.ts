@@ -18,6 +18,12 @@ router.get(
   async (req: Request, res: Response) => {
     const { url, checkAvailability } = req.query;
 
+    if ('false' === process.env.ENABLE_PUPPETEER) {
+      throw new Error(
+        "Puppeteer non abilitato. Contattare l'amministratore del sito"
+      );
+    }
+
     if (!url) {
       throw new Error('url is not valid');
     }
