@@ -14,8 +14,7 @@ program
   .name('string-util')
   .description(
     'CLI per fare scraping di prodotti taiwangun e ilsemaforo, usato per test locali'
-  )
-  .version('0.8.0');
+  );
 
 program
   .command('scrape')
