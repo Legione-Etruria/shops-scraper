@@ -9,8 +9,7 @@
   "scripts": {
     "dev": "bun --hot src/index.ts",
     "deploy": "caprover deploy -n legio -a scraper -b main",
-    "build": "tsc --build",
-    "start": "node dist/index.js",
+    "prod": "bun run src/index.ts",
     "cli": "bun src/cli.ts"
   },
   "keywords": [],
