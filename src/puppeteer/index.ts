@@ -13,7 +13,7 @@ interface Iscraped {
   imgSrc?: string;
 }
 
-export const getDataFrom = async (url: string, options: Ioptions) => {
+export const getDataFromShop = async (url: string, options: Ioptions) => {
   const urlSplit = url.split('www.');
   const domain = urlSplit[1];
   let scrapedData: Iscraped = {} as any;

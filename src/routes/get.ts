@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
 import { query } from 'express-validator';
-import { getDataFrom } from '../puppeteer/scrape';
+import { getDataFromShop } from '../puppeteer/index';
 
 const router = express.Router();
 
@@ -23,7 +23,7 @@ router.get(
     }
 
     console.info(`Scraping ${url}`);
-    const result = await getDataFrom(String(url), {
+    const result = await getDataFromShop(String(url), {
       checkAvailability: 'true' === checkAvailability,
     });
 
