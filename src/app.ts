@@ -3,7 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import 'express-async-errors';
 import http from 'http';
-import { getItemDataRouter } from './routes/get-item-data';
+import { getItemDataRouter } from './routes/get';
 
 const app = express();
 app.use(json());

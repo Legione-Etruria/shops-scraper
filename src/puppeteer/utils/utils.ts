@@ -3,14 +3,8 @@ import { Page } from 'puppeteer';
 /**
  * Ottieni un array di elementi mostrati a schermo con la stessa classe CSS
  */
-export const getRenderedElements = async (
-  config: IParams = {
-    DOM: null,
-    prop: '',
-    valueType: 'innerText',
-  }
-) => {
-  const page: any = config.DOM;
+export const getRenderedElements = async (config: IParams) => {
+  const page = config.DOM;
   let getElems: any = await page.$$(config.prop);
 
   const elemsArray = Promise.all(
@@ -45,7 +39,7 @@ export const setItalianLocale = async (page: Page) => {
 };
 
 export interface IParams {
-  DOM: any;
+  DOM: Page;
   prop: string;
   valueType: string;
 }
