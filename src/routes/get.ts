@@ -1,7 +1,6 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
 import { query } from 'express-validator';
-import { getDataFromShop } from '../puppeteer/index';
 
 const router = express.Router();
 
@@ -29,11 +28,11 @@ router.get(
     }
 
     console.info(`Scraping ${url}`);
-    const result = await getDataFromShop(String(url), {
-      checkAvailability: 'true' === checkAvailability,
-    });
+    // const result = await getDataFromShop(String(url), {
+    //   checkAvailability: 'true' === checkAvailability,
+    // });
 
-    res.send(result);
+    res.send('OK');
   }
 );
 

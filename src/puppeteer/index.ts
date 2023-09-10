@@ -1,5 +1,5 @@
 import { Page } from 'puppeteer';
-import { browser } from './puppeteer';
+import { getBrowser } from './puppeteer';
 import { getRenderedElements } from './utils/utils';
 
 interface Ioptions {
@@ -14,9 +14,11 @@ interface Iscraped {
 }
 
 export const getDataFromShop = async (url: string, options: Ioptions) => {
+  const browser = await getBrowser();
+
   const urlSplit = url.split('www.');
   const domain = urlSplit[1];
-  let scrapedData: Iscraped = {} as any;
+  let scrapedData: Iscraped | null = null;
 
   const ilSemaforo = domain.startsWith('ilsemaforo');
   const taiwangun = domain.startsWith('taiwangun');

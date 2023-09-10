@@ -1,7 +1,7 @@
 import puppeteer, { Browser } from 'puppeteer';
 import { setItalianLocale } from './utils/utils';
 
-export let browser: Browser;
+let browser: Browser | null = null;
 
 export const launchBrowser = async () => {
   browser = await puppeteer.launch({
@@ -16,7 +16,16 @@ export const launchBrowser = async () => {
   console.log('🚀 Puppeteer Setup Completed 👌');
 };
 
+export const getBrowser = async () => {
+  if (!browser) {
+    throw new Error('Browser not initialized');
+  }
+
+  return browser;
+};
+
 const browserArgs = [
+  '--disable-site-isolation-trials',
   '--autoplay-policy=user-gesture-required',
   '--disable-background-networking',
   '--disable-background-timer-throttling',
@@ -39,6 +48,7 @@ const browserArgs = [
   '--disable-renderer-backgrounding',
   '--disable-setuid-sandbox',
   '--disable-speech-api',
+  '--disable-accelerated-2d-canvas',
   '--disable-sync',
   '--hide-scrollbars',
   '--ignore-gpu-blacklist',
@@ -52,4 +62,9 @@ const browserArgs = [
   '--password-store=basic',
   '--use-gl=swiftshader',
   '--use-mock-keychain',
+  // '--single-process', //? disabilitato dato che causa il crash di chrome
+  '--disable-gpu',
+  '--font-render-hinting=none',
+  '--remote-debugging-port=9222',
+  '--remote-debugging-address=0.0.0.0',
 ];

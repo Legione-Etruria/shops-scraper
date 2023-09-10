@@ -5,19 +5,14 @@ import { Page } from 'puppeteer';
  */
 export const getRenderedElements = async (config: IParams) => {
   const page = config.DOM;
-  let getElems: any = await page.$$(config.prop);
+  const getElems = await page.$$(config.prop);
 
   const elemsArray = Promise.all(
-    await getElems.reduce(
-      async (acc: Promise<any[]>, curr: any, index: number) => {
-        const res = await acc;
-        const elem = await (
-          await curr.getProperty(config.valueType)
-        ).jsonValue();
-        return [...res, elem];
-      },
-      Promise.resolve([])
-    )
+    await getElems.reduce(async (acc: Promise<any[]>, curr, index: number) => {
+      const res = await acc;
+      const elem = await (await curr.getProperty(config.valueType)).jsonValue();
+      return [...res, elem];
+    }, Promise.resolve([]))
   );
   return await elemsArray;
 };
