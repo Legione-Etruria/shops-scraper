@@ -2,7 +2,6 @@
   "name": "legio-scraper",
   "version": "1.0.1",
   "type": "module",
-  "module": "index.ts",
   "scripts": {
     "dev": "bun --hot src/index.ts",
     "deploy": "tar -cvf ./deploy.tar --exclude='node_modules' --exclude='src/cli.ts' --exclude='dist' * && caprover deploy -t ./deploy.tar -n legio -a scraper && rm ./deploy.tar",
