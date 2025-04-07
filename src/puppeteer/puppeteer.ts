@@ -5,16 +5,21 @@ let browser: Browser | null = null;
 
 export const launchBrowser = async () => {
   browser = await puppeteer.launch({
-    headless: false,
+    headless: process.env.HEADLESS === 'true',
     args: browserArgs,
-    // executablePath: process.env.CHROME_BIN || undefined,
+    executablePath: process.env.CHROME_BIN || undefined,
   });
 
   const page = await browser.newPage();
 
-  await setItalianLocale(page);
+  try {
+    await setItalianLocale(page);
 
-  console.log('🚀 Puppeteer Setup Completed 👌');
+    console.log('🚀 Puppeteer Setup Completed 👌');
+  } catch (error) {
+    console.error('Error setting up Puppeteer:', error);
+    throw error;
+  }
 };
 
 export const getBrowser = async () => {

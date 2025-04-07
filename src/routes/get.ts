@@ -1,6 +1,7 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
 import { query } from 'express-validator';
+import { getDataFromShop } from '../puppeteer';
 
 const router = express.Router();
 
@@ -28,11 +29,17 @@ router.get(
     }
 
     console.info(`Scraping ${url}`);
-    // const result = await getDataFromShop(String(url), {
-    //   checkAvailability: 'true' === checkAvailability,
-    // });
+    const result = await getDataFromShop(String(url), {
+      checkAvailability: 'true' === checkAvailability,
+    });
 
-    res.send('OK');
+    if (!result) {
+      return res.status(500).json({
+        message: 'Error while scraping the page',
+      });
+    }
+
+    res.send(result);
   }
 );
 
