@@ -5,8 +5,9 @@ let browser: Browser | null = null;
 
 export const launchBrowser = async () => {
   browser = await puppeteer.launch({
-    headless: 'new',
+    headless: false,
     args: browserArgs,
+    // executablePath: process.env.CHROME_BIN || undefined,
   });
 
   const page = await browser.newPage();

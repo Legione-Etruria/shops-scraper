@@ -19,9 +19,18 @@ export const getRenderedElements = async (config: IParams) => {
 
 export const setItalianLocale = async (page: Page) => {
   await page.goto(
-    'https://www.taiwangun.com/morale-patches/taiwangun-pvc-patch-1-8fields-2?q=taiwangun'
+    'https://www.taiwangun.com/morale-patches/shotgun-girl-pvc-patch-8fields'
   );
   await page.waitForNetworkIdle();
+  //dismiss cookies by clicking on a button that contains the text "Allow all"
+  await page.click(`a[data-type="accept-cookies-button"]`);
+
+  (await page.$('div[data-id="formy-dostawy"]'))?.evaluate((el) => {
+    el.scrollIntoView();
+    el.style.display = 'block';
+  });
+
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   await page.select(`#UserCartDataCountryId`, '23');
   await page.type('#UserCartDataPostCode', '59100');

@@ -21,7 +21,7 @@ program
 
 program
   .command('scrape')
-  .description('Effettua lo scraping ti un prodotto')
+  .description('Effettua lo scraping di un prodotto')
   .argument('<string>', 'url del prodotto')
   .action(async (str, options) => await scrape(str));
 
